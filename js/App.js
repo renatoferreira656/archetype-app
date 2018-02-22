@@ -10,8 +10,8 @@ export default class App extends React.Component {
 
       return (
         <Wizard>
-          <Page route="First"/>
-          <Page route="Second"/>
+          <Page route="first"/>
+          <Page route="second"/>
         </Wizard>
       )
   }
