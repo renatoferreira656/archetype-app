@@ -10,8 +10,12 @@ export default class App extends React.Component {
 
       return (
         <Wizard>
-          <Page route="first"/>
-          <Page route="second"/>
+          <Page route="a"/>
+          <Page route="b"/>
+          <Page route="c"/>
+          <Page route="d"/>
+          <Page route="e"/>
+          <Page route="f"/>
         </Wizard>
       )
   }

@@ -28,7 +28,10 @@ export default class Wizard extends React.Component {
     }
 
     next() {
-        let index = this.state.index + 1;
+        let index = 0;
+        if(this.state.index < this.props.children.length - 1){
+            index = this.state.index + 1;
+        }
         this.setState({ location: this.props.children[index].props.route, index });
     }
 
