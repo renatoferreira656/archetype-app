@@ -11,33 +11,36 @@ export default class Wizard extends React.Component {
             index: 0
         };
         this.next = this.next.bind(this);
+        this.getChildrens = this.getChildrens.bind(this);
     }
 
 
     componentWillMount() {
+        this.setState({ location: this.getChildrens()[this.state.index].props.route });
+    }
+
+    next() {
+        let index = 0;
+        if(this.state.index < this.getChildrens().length - 1){
+            index = this.state.index + 1;
+        }
+        this.setState({ location: this.getChildrens()[index].props.route, index });
+    }
+
+    getChildrens(){
         if (!this.props.children) {
             throw 'Wizard must have childrens';
         }
 
         if (!this.props.children.length) {
-            this.setState({ location: this.props.children.props.route });
-            return;
+            return [this.props.children];
         }
-
-        this.setState({ location: this.props.children[this.state.index].props.route });
-    }
-
-    next() {
-        let index = 0;
-        if(this.state.index < this.props.children.length - 1){
-            index = this.state.index + 1;
-        }
-        this.setState({ location: this.props.children[index].props.route, index });
+        return this.props.children;
     }
 
     render() {
         let view;
-        this.props.children.forEach((item) => {
+        this.getChildrens().forEach((item) => {
             if (this.state.location == item.props.route) {
                 view = item;
                 return;
