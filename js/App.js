@@ -9,9 +9,7 @@ export default class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      url: ''
-    }
+    this.state = { url: '' };
     Location.urlChange(() => {
       this.setState({ url: Location.url() });
     });
@@ -21,7 +19,6 @@ export default class App extends React.Component {
     let url = this.state.url;
     return (
       <Wizard first="a">
-
         <Page route="a">
           <Text>{url}</Text>
           <TextInput name="name" />
@@ -39,7 +36,7 @@ export default class App extends React.Component {
         </Page>
 
         <Page route="c">
-          <Text>{url}</Text>
+        <Text>{url}</Text>
           <TextInput name="why" />
           <TextInput name="fork" />
           <ActionButton to="d" >D</ActionButton>

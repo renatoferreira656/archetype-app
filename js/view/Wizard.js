@@ -69,7 +69,7 @@ class Wizard extends React.Component {
                 view = item;
             }
         });
-        return view;
+        return React.cloneElement(view);
     }
 }
 
