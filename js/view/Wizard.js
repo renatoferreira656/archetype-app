@@ -1,33 +1,36 @@
 import React from 'react';
 import { View, ViewPagerAndroid, Text } from 'react-native';
-import Page from './Page'
-import UUID from '../utils/uuid'
+import Page from './Page';
+import UUID from '../utils/uuid';
+import Location from '../utils/Location';
 
 export default class Wizard extends React.Component {
+
     constructor(props) {
         super(props);
         this.pages = {};
+        
         this.state = {
-            index: 0
+            location: ''
         };
-        this.navigationNext = this.navigationNext.bind(this);
-        this.getChildrens = this.getChildrens.bind(this);
-    }
 
+        this.navigateTo = this.navigateTo.bind(this);
+        this.getChildrens = this.getChildrens.bind(this);
+        wiz = this;
+        Location.addListener('url', (path)=>{
+            wiz.setState({ location: path });
+        });
+    }
 
     componentWillMount() {
-        this.setState({ location: this.getChildrens()[this.state.index].props.route });
+        this.setState({ location: this.props.first });
     }
 
-    navigationNext() {
-        let index = 0;
-        if(this.state.index < this.getChildrens().length - 1){
-            index = this.state.index + 1;
-        }
-        this.setState({ location: this.getChildrens()[index].props.route, index });
+    navigateTo(path) {
+        this.setState({ location: path });
     }
 
-    getChildrens(){
+    getChildrens() {
         if (!this.props.children) {
             throw 'Wizard must have childrens';
         }
@@ -39,29 +42,12 @@ export default class Wizard extends React.Component {
     }
 
     render() {
-        let view;
+        let view = (<Text>ue</Text>);
         this.getChildrens().forEach((item) => {
             if (this.state.location == item.props.route) {
                 view = item;
-                return;
             }
         });
-
-        if(view.type.displayName == 'WizardPage'){
-            view = React.cloneElement(view, {navigationNext: this.navigationNext});
-        }
-        return <View>{view}</View>
-        
-    }
-}
-
-
-var styles = {
-    viewPager: {
-        flex: 1
-    },
-    pageStyle: {
-        alignItems: 'center',
-        padding: 20,
+        return React.cloneElement(view, { navigateTo: this.navigateTo });
     }
 }
