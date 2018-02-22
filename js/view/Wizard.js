@@ -2,9 +2,25 @@ import React from 'react';
 import { View, ViewPagerAndroid, Text } from 'react-native';
 import Page from './Page';
 import UUID from '../utils/uuid';
-import Location from '../utils/Location';
 
-export default class Wizard extends React.Component {
+class Location {
+
+    constructor() {
+        this.event = {};
+    }
+
+    addListener(key, fnc) {
+        this.event[key] = fnc;
+    }
+
+    call(key, prop) {
+        this.event[key](prop);
+    }
+}
+
+let location = new Location();
+
+class Wizard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -51,3 +67,5 @@ export default class Wizard extends React.Component {
         return React.cloneElement(view, { navigateTo: this.navigateTo });
     }
 }
+
+export { Wizard as default, location}
