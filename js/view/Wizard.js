@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewPagerAndroid, Text, Button } from 'react-native';
+import { View, ViewPagerAndroid, Text } from 'react-native';
 import Page from './Page'
 import UUID from '../utils/uuid'
 
@@ -10,7 +10,7 @@ export default class Wizard extends React.Component {
         this.state = {
             index: 0
         };
-        this.next = this.next.bind(this);
+        this.navigationNext = this.navigationNext.bind(this);
         this.getChildrens = this.getChildrens.bind(this);
     }
 
@@ -19,7 +19,7 @@ export default class Wizard extends React.Component {
         this.setState({ location: this.getChildrens()[this.state.index].props.route });
     }
 
-    next() {
+    navigationNext() {
         let index = 0;
         if(this.state.index < this.getChildrens().length - 1){
             index = this.state.index + 1;
@@ -46,12 +46,12 @@ export default class Wizard extends React.Component {
                 return;
             }
         });
-        return (
-            <View>
-                {view}
-                <Button title="next" onPress={this.next} />
-            </View>
-        );
+
+        if(view.type.displayName == 'WizardPage'){
+            view = React.cloneElement(view, {navigationNext: this.navigationNext});
+        }
+        return <View>{view}</View>
+        
     }
 }
 
