@@ -8,9 +8,9 @@ export default class App extends React.Component {
   render() {
       const wizard = new Wizard();
 
-      wizard.add(
-        <Page key={UUID.v4()} /> 
-      );
+      wizard.add(<Page/>);
+
+      wizard.add(<Page/>);
 
       return wizard.build();
   }
