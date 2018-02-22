@@ -18,6 +18,6 @@ export default class ActionButton extends React.Component {
     }
 
     render() {
-        return ( <Button onPress={this.onClick} title={this.props.title} /> );
+        return ( <Button onPress={this.onClick} title={this.props.children} /> );
     }
 }
