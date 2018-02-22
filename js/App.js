@@ -7,12 +7,23 @@ import ActionButton from './view/ActionButton';
 
 export default class App extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      url: ''
+    }
+    Location.urlChange(() => {
+      this.setState({ url: Location.url() });
+    });
+  }
+
   render() {
+    let url = this.state.url;
     return (
       <Wizard first="a">
 
         <Page route="a">
-          <Text>a</Text>
+          <Text>{url}</Text>
           <TextInput name="name" />
           <TextInput name="rg" />
           <TextInput name="cpf" />
@@ -21,21 +32,21 @@ export default class App extends React.Component {
         </Page>
 
         <Page route="b">
-          <Text>b</Text>
+          <Text>{url}</Text>
           <TextInput name="state" />
           <TextInput name="country" />
           <ActionButton to="d">D</ActionButton>
         </Page>
 
         <Page route="c">
-          <Text>c</Text>
+          <Text>{url}</Text>
           <TextInput name="why" />
           <TextInput name="fork" />
           <ActionButton to="d" >D</ActionButton>
         </Page>
 
         <Page route="d">
-          <Text>end</Text>
+          <Text>{url}</Text>
           <ActionButton onPress={() => { Location.url('a') }} >A</ActionButton>
         </Page>
 

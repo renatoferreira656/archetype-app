@@ -5,21 +5,33 @@ import UUID from '../utils/uuid';
 
 class Location {
 
-    constructor() {
-        this.route = {};
-    }
-
     static setRouter(fnc) {
         Location.route = fnc;
     }
 
     static url(path) {
-        this.currentLocation = path;
+        if(!path){
+            return Location.currentLocation;
+        }
+        Location.currentLocation = path;
         Location.route(path);
+        Location.execCallbacks();
     }
 
-    static currentLocation() {
-        return Location.currentLocation;
+    static urlChange(cb){
+        if(!Location.callbacks){
+            Location.callbacks = [];
+        }
+        Location.callbacks.push(cb);
+    }
+
+    static execCallbacks(){
+        if(!Location.callbacks){
+            return;
+        }
+        Location.callbacks.forEach((item)=>{
+            item();
+        });
     }
 }
 
@@ -28,10 +40,7 @@ class Wizard extends React.Component {
     constructor(props) {
         super(props);
         this.pages = {};
-
         this.state = { location: '' };
-
-        this.navigateTo = this.navigateTo.bind(this);
         this.getChildrens = this.getChildrens.bind(this);
         Location.setRouter((path) => {
             this.setState({ location: path });
@@ -39,11 +48,7 @@ class Wizard extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({ location: this.props.first });
-    }
-
-    navigateTo(path) {
-        this.setState({ location: path });
+        Location.url(this.props.first);
     }
 
     getChildrens() {
@@ -58,13 +63,13 @@ class Wizard extends React.Component {
     }
 
     render() {
-        let view = (<Text>ue</Text>);
+        let view = (<Text/>);
         this.getChildrens().forEach((item) => {
             if (this.state.location == item.props.route) {
                 view = item;
             }
         });
-        return React.cloneElement(view, { navigateTo: this.navigateTo });
+        return view;
     }
 }
 
