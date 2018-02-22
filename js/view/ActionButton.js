@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-native';
-import Wizard, { Location } from './Wizard';
+import { Location } from './Wizard';
 
 export default class ActionButton extends React.Component {
 

@@ -10,16 +10,16 @@ class Location {
     }
 
     static setRouter(fnc) {
-        this.route = fnc;
+        Location.route = fnc;
     }
 
     static url(path) {
         this.currentLocation = path;
-        this.route(path);
+        Location.route(path);
     }
 
     static currentLocation() {
-        return this.currentLocation;
+        return Location.currentLocation;
     }
 }
 
