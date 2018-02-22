@@ -6,35 +6,35 @@ import UUID from '../utils/uuid';
 class Location {
 
     constructor() {
-        this.event = {};
+        this.route = {};
     }
 
-    addListener(key, fnc) {
-        this.event[key] = fnc;
+    static setRouter(fnc) {
+        this.route = fnc;
     }
 
-    call(key, prop) {
-        this.event[key](prop);
+    static url(path) {
+        this.currentLocation = path;
+        this.route(path);
+    }
+
+    currentLocation() {
+        return this.currentLocation;
     }
 }
-
-let location = new Location();
 
 class Wizard extends React.Component {
 
     constructor(props) {
         super(props);
         this.pages = {};
-        
-        this.state = {
-            location: ''
-        };
+
+        this.state = { location: '' };
 
         this.navigateTo = this.navigateTo.bind(this);
         this.getChildrens = this.getChildrens.bind(this);
-        wiz = this;
-        Location.addListener('url', (path)=>{
-            wiz.setState({ location: path });
+        Location.setRouter((path) => {
+            this.setState({ location: path });
         });
     }
 
@@ -68,4 +68,4 @@ class Wizard extends React.Component {
     }
 }
 
-export { Wizard as default, location}
+export { Wizard as default, Location }

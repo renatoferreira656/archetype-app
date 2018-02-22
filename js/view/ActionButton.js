@@ -11,7 +11,7 @@ export default class ActionButton extends React.Component {
 
     onClick(){
         if(this.props.to){
-            Location.call('url', this.props.to);
+            Location.url(this.props.to) ;
             return;
         }
         this.props.onPress();

@@ -35,7 +35,7 @@ export default class App extends React.Component {
 
         <Page route="d">
           <Text>end</Text>
-          <ActionButton title="c" onPress={() => { Location.call('url', 'a') }} />
+          <ActionButton title="c" onPress={() => { Location.url('a') }} />
         </Page>
       </Wizard>
     )
