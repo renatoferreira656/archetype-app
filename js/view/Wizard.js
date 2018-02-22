@@ -1,38 +1,48 @@
 import React from 'react';
-import { View, ViewPagerAndroid } from 'react-native';
+import { View, ViewPagerAndroid, Text } from 'react-native';
 import Page from './Page'
 import UUID from '../utils/uuid'
 
-class Wizard {
-    constructor(){
-        this.pages = [];
+export default class Wizard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.pages = {};
+        this.state = {};
     }
 
-    add(body) {
-        this.pages.push((<View key={UUID.v4()}>{body}</View>));
-        return this;
+
+    componentWillMount(){
+        if(!this.props.children){
+            throw 'Wizard must have childrens';
+        }
+
+        if(!this.props.children.length) {
+            this.setState({location:this.props.children.props.route});
+            return;
+        }
+
+        this.setState({location: this.props.children[0].props.route});
     }
-    
-    build(){
-        return (
-            <ViewPagerAndroid 
-                style={styles.viewPager}
-                initialPage={0}>
-                {this.pages}
-            </ViewPagerAndroid>
-        )
+
+    render() {
+        let view;
+        this.props.children.forEach((item) => {
+            if(this.state.location == item.props.route) {
+                view = item;
+                return;
+            }
+        });
+        return view;
     }
 }
 
 
 var styles = {
     viewPager: {
-      flex: 1
+        flex: 1
     },
     pageStyle: {
-      alignItems: 'center',
-      padding: 20,
+        alignItems: 'center',
+        padding: 20,
     }
-  }
-
-export default Wizard;
+}

@@ -8,11 +8,12 @@ export default class App extends React.Component {
   render() {
       const wizard = new Wizard();
 
-      wizard.add(<Page/>);
-
-      wizard.add(<Page/>);
-
-      return wizard.build();
+      return (
+        <Wizard>
+          <Page route="First"/>
+          <Page route="Second"/>
+        </Wizard>
+      )
   }
 }
 
