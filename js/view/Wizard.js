@@ -18,7 +18,7 @@ class Location {
         this.route(path);
     }
 
-    currentLocation() {
+    static currentLocation() {
         return this.currentLocation;
     }
 }
