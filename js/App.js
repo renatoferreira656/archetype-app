@@ -11,16 +11,23 @@ export default class App extends React.Component {
 
   constructor() {
     super();
-    this.state = { url: '' };
+    this.state = { url: '' , obj: {} };
+    this.onSubmit = this.onSubmit.bind(this);
     Location.me().urlChange(()=>{
       this.setState({url: Location.me().url()});
     });
   }
 
+  onSubmit(result){
+    let obj = Object.assign(result, this.state.obj);
+    this.setState({obj})
+  }
+
   render() {
     return (
       <Wizard first="a">
-        <FormPage route="a">
+
+        <FormPage route="a" onSubmit={this.onSubmit}>
           <Label>{this.state.url}</Label>
           <Input name="name" />
           <Input name="rg" />
@@ -29,22 +36,22 @@ export default class App extends React.Component {
           <ActionButton to="c">C</ActionButton>
         </FormPage>
 
-        <FormPage route="b">
+        <FormPage route="b" onSubmit={this.onSubmit}>
           <Label>{this.state.url}</Label>
           <Input name="state" />
           <Input name="country" />
           <ActionButton to="d">D</ActionButton>
         </FormPage>
 
-        <FormPage route="c">
+        <FormPage route="c" onSubmit={this.onSubmit}>
           <Label>{this.state.url}</Label>
           <Input name="why" />
           <Input name="fork" />
           <ActionButton to="d" >D</ActionButton>
         </FormPage>
 
-        <FormPage route="d">
-          <Label>{this.state.url}</Label>
+        <FormPage route="d" onSubmit={this.onSubmit}>
+          <Label>{JSON.stringify(this.state.obj)}</Label>
           <ActionButton onPress={() => { Location.me().url('a') }} >A</ActionButton>
         </FormPage>
 
