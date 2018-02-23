@@ -25,7 +25,7 @@ export default class App extends React.Component {
           <Input name="name" />
           <Input name="rg" />
           <Input name="cpf" />
-          <ActionButton to="b">B</ActionButton>
+          <ActionButton to="b" >B</ActionButton>
           <ActionButton to="c">C</ActionButton>
         </FormPage>
 

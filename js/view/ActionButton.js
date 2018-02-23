@@ -10,7 +10,6 @@ export default class ActionButton extends React.Component {
     }
 
     onClick() {
-        
         if (this.props.onSubmit) {
             this.props.onSubmit();
         }

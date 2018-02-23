@@ -61,10 +61,10 @@ class Wizard extends React.Component {
                 return item;
             }
         });
-        return (
-            <View>
-                {views}
-            </View>
+        return ( 
+            <View> 
+                {views} 
+            </View> 
         );
     }
 }
