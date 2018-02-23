@@ -29,7 +29,7 @@ export default class FormPage extends React.Component {
             }
 
             return React.cloneElement(item, props);
-        });        
+        });   
         return <View>{fields}</View>
     }
 }
