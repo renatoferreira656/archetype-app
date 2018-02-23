@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ViewPagerAndroid, Text } from 'react-native';
 import Page from './Page';
-import UUID from '../utils/uuid';
 
 class Location {
     static me() {
@@ -47,7 +46,6 @@ class Wizard extends React.Component {
         super(props);
         this.pages = {};
         this.state = { location: '' };
-        this.getChildrens = this.getChildrens.bind(this);
         Location.me().setRouter((path) => {
             this.setState({ location: path });
         });
@@ -57,25 +55,17 @@ class Wizard extends React.Component {
         Location.me().url(this.props.first);
     }
 
-    getChildrens() {
-        if (!this.props.children) {
-            throw 'Wizard must have childrens';
-        }
-
-        if (!this.props.children.length) {
-            return [this.props.children];
-        }
-        return this.props.children;
-    }
-
     render() {
-        let view = (<Text />);
-        this.getChildrens().forEach((item) => {
+        let views = React.Children.map(this.props.children, (item) => {
             if (this.state.location == item.props.route) {
-                view = item;
+                return item;
             }
         });
-        return React.cloneElement(view);
+        return (
+            <View>
+                {views}
+            </View>
+        );
     }
 }
 

@@ -1,49 +1,50 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Wizard, { Location } from './view/Wizard'
 import FormPage from './view/FormPage'
 import UUID from './utils/uuid'
 import ActionButton from './view/ActionButton';
+import Input from './view/Input';
+import Label from './view/Label';
 
 export default class App extends React.Component {
 
   constructor() {
     super();
     this.state = { url: '' };
-    Location.urlChange(() => {
-      this.setState({ url: Location.url() });
+    Location.me().urlChange(()=>{
+      this.setState({url: Location.me().url()});
     });
   }
 
   render() {
-    let url = this.state.url;
     return (
       <Wizard first="a">
         <FormPage route="a">
-          <Text>{url}</Text>
-          <TextInput name="name" />
-          <TextInput name="rg" />
-          <TextInput name="cpf" />
+          <Label>{this.state.url}</Label>
+          <Input name="name" />
+          <Input name="rg" />
+          <Input name="cpf" />
           <ActionButton to="b">B</ActionButton>
           <ActionButton to="c">C</ActionButton>
         </FormPage>
 
         <FormPage route="b">
-          <Text>{url}</Text>
-          <TextInput name="state" />
-          <TextInput name="country" />
+          <Label>{this.state.url}</Label>
+          <Input name="state" />
+          <Input name="country" />
           <ActionButton to="d">D</ActionButton>
         </FormPage>
 
         <FormPage route="c">
-          <Text>{url}</Text>
-          <TextInput name="why" />
-          <TextInput name="fork" />
+          <Label>{this.state.url}</Label>
+          <Input name="why" />
+          <Input name="fork" />
           <ActionButton to="d" >D</ActionButton>
         </FormPage>
 
         <FormPage route="d">
-          <Text>{url}</Text>
+          <Label>{this.state.url}</Label>
           <ActionButton onPress={() => { Location.me().url('a') }} >A</ActionButton>
         </FormPage>
 

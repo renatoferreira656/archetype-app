@@ -9,23 +9,21 @@ export default class ActionButton extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick(){
-        if(this.props.to){
-            Location.me().url(this.props.to) ;
-            return;
+    onClick() {
+        
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
         }
-        this.props.onPress();
+
+        if (this.props.onPress) {
+            this.props.onPress();
+        }
+        if (this.props.to) {
+            Location.me().url(this.props.to);
+        }
     }
 
     render() {
-        return ( <Button onPress={this.onClick} title={this.props.children} /> );
+        return (<Button onPress={this.onClick} title={this.props.children} />);
     }
 }
-
-
-function Action(){
-
-}
-
-Action.prototype
-Action.a = 'a'
