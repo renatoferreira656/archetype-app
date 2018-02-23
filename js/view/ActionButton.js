@@ -11,7 +11,7 @@ export default class ActionButton extends React.Component {
 
     onClick(){
         if(this.props.to){
-            Location.url(this.props.to) ;
+            Location.me().url(this.props.to) ;
             return;
         }
         this.props.onPress();
@@ -21,3 +21,11 @@ export default class ActionButton extends React.Component {
         return ( <Button onPress={this.onClick} title={this.props.children} /> );
     }
 }
+
+
+function Action(){
+
+}
+
+Action.prototype
+Action.a = 'a'

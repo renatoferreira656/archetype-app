@@ -4,32 +4,38 @@ import Page from './Page';
 import UUID from '../utils/uuid';
 
 class Location {
-
-    static setRouter(fnc) {
-        Location.route = fnc;
-    }
-
-    static url(path) {
-        if(!path){
-            return Location.currentLocation;
+    static me() {
+        if (!Location.INSTANCE) {
+            Location.INSTANCE = new Location();
         }
-        Location.currentLocation = path;
-        Location.route(path);
-        Location.execCallbacks();
+        return Location.INSTANCE;
     }
 
-    static urlChange(cb){
-        if(!Location.callbacks){
-            Location.callbacks = [];
+    setRouter(fnc) {
+        this.route = fnc;
+    }
+
+    url(path) {
+        if (!path) {
+            return this.currentLocation;
         }
-        Location.callbacks.push(cb);
+        this.currentLocation = path;
+        this.route(path);
+        this.execCallbacks();
     }
 
-    static execCallbacks(){
-        if(!Location.callbacks){
+    urlChange(cb) {
+        if (!this.callbacks) {
+            this.callbacks = [];
+        }
+        this.callbacks.push(cb);
+    }
+
+    execCallbacks() {
+        if (!this.callbacks) {
             return;
         }
-        Location.callbacks.forEach((item)=>{
+        this.callbacks.forEach((item) => {
             item();
         });
     }
@@ -42,13 +48,13 @@ class Wizard extends React.Component {
         this.pages = {};
         this.state = { location: '' };
         this.getChildrens = this.getChildrens.bind(this);
-        Location.setRouter((path) => {
+        Location.me().setRouter((path) => {
             this.setState({ location: path });
         });
     }
 
     componentWillMount() {
-        Location.url(this.props.first);
+        Location.me().url(this.props.first);
     }
 
     getChildrens() {
@@ -63,7 +69,7 @@ class Wizard extends React.Component {
     }
 
     render() {
-        let view = (<Text/>);
+        let view = (<Text />);
         this.getChildrens().forEach((item) => {
             if (this.state.location == item.props.route) {
                 view = item;

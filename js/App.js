@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Wizard, { Location } from './view/Wizard'
-import Page from './view/Page'
+import FormPage from './view/FormPage'
 import UUID from './utils/uuid'
 import ActionButton from './view/ActionButton';
 
@@ -19,33 +19,33 @@ export default class App extends React.Component {
     let url = this.state.url;
     return (
       <Wizard first="a">
-        <Page route="a">
+        <FormPage route="a">
           <Text>{url}</Text>
           <TextInput name="name" />
           <TextInput name="rg" />
           <TextInput name="cpf" />
           <ActionButton to="b">B</ActionButton>
           <ActionButton to="c">C</ActionButton>
-        </Page>
+        </FormPage>
 
-        <Page route="b">
+        <FormPage route="b">
           <Text>{url}</Text>
           <TextInput name="state" />
           <TextInput name="country" />
           <ActionButton to="d">D</ActionButton>
-        </Page>
+        </FormPage>
 
-        <Page route="c">
-        <Text>{url}</Text>
+        <FormPage route="c">
+          <Text>{url}</Text>
           <TextInput name="why" />
           <TextInput name="fork" />
           <ActionButton to="d" >D</ActionButton>
-        </Page>
+        </FormPage>
 
-        <Page route="d">
+        <FormPage route="d">
           <Text>{url}</Text>
-          <ActionButton onPress={() => { Location.url('a') }} >A</ActionButton>
-        </Page>
+          <ActionButton onPress={() => { Location.me().url('a') }} >A</ActionButton>
+        </FormPage>
 
       </Wizard>
     )
